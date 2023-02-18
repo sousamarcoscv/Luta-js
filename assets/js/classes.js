@@ -80,21 +80,36 @@ class Stage{
 
     update(){
         //Fighter 1
-        this.fighter1El.querySelector('.name').innerHTML = ` Nome : ${this.fighter1.name} - HP ${this.fighter1.life} - <br> Raça: ${this.fighter1.constructor.name}` ;
+        this.fighter1El.querySelector('.name').innerHTML = ` Nome : ${this.fighter1.name} - HP ${this.fighter1.life.toFixed(1)} - <br> Raça: ${this.fighter1.constructor.name}` ;
         let f1pct = (this.fighter1.life / this.fighter1.maxLife) * 100;
         this.fighter1El.querySelector('.lifebar .bar').style.width = `${f1pct}%`;
 
 
         //Fighter 2
-        this.fighter2El.querySelector('.name').innerHTML = ` Nome : ${this.fighter2.name} - HP ${this.fighter2.life} - <br> Raça: ${this.fighter2.constructor.name}` ;
+        this.fighter2El.querySelector('.name').innerHTML = ` Nome : ${this.fighter2.name} - HP ${this.fighter2.life.toFixed(1)} - <br> Raça: ${this.fighter2.constructor.name}` ;
         let f2pct = (this.fighter2.life / this.fighter2.maxLife) * 100;
         this.fighter2El.querySelector('.lifebar .bar').style.width = `${f2pct}%`;
 
     }
 
     doAttack(attracking,attaacked){
-        let newli = document.querySelector('.log').innerHTML = `${attracking.name} esta atacando ${attaacked.name}`;
+        if(attracking.life <= 0 || attaacked.life <=0 ){
+            console.log('Atacando Cachorro Morto');
+            return;
+        }
 
-        this.update();
+        let attackFactor = (Math.random() * 2).toFixed(2);
+        let actualAttack = attracking.attack * attackFactor;
+
+        let defenseFactor = (Math.random() * 2).toFixed(2);
+        let actualDefense = attracking.defense * defenseFactor;
+
+        if(actualAttack > actualDefense){
+            attaacked.life -= actualAttack;
+            console.log(`${attracking.name} causou ${actualAttack.toFixed(2)} de dano em ${attaacked.name}` );
+        } else {
+            console.log(`${attaacked.name} conseguiu denfender `);
+        }
+            this.update();
     }
 }
