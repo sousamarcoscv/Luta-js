@@ -73,15 +73,28 @@ class Stage{
 
     start(){
         this.update();
-        //TODO : Evento do Botao de Atacar
-        
+       
+        this.fighter1El.querySelector('.attackButton').addEventListener('click',() => this.doAttack(this.fighter1,this.fighter2));
+        this.fighter2El.querySelector('.attackButton').addEventListener('click',() => this.doAttack(this.fighter2,this.fighter1));
     }
 
     update(){
         //Fighter 1
-        this.fighter1El.querySelector('.name').innerHTML = this.fighter1.name;
+        this.fighter1El.querySelector('.name').innerHTML = ` Nome : ${this.fighter1.name} - HP ${this.fighter1.life} - <br> Raça: ${this.fighter1.constructor.name}` ;
+        let f1pct = (this.fighter1.life / this.fighter1.maxLife) * 100;
+        this.fighter1El.querySelector('.lifebar .bar').style.width = `${f1pct}%`;
+
 
         //Fighter 2
-        this.fighter2El.querySelector('.name').innerHTML = this.fighter2.name;
+        this.fighter2El.querySelector('.name').innerHTML = ` Nome : ${this.fighter2.name} - HP ${this.fighter2.life} - <br> Raça: ${this.fighter2.constructor.name}` ;
+        let f2pct = (this.fighter2.life / this.fighter2.maxLife) * 100;
+        this.fighter2El.querySelector('.lifebar .bar').style.width = `${f2pct}%`;
+
+    }
+
+    doAttack(attracking,attaacked){
+        let newli = document.querySelector('.log').innerHTML = `${attracking.name} esta atacando ${attaacked.name}`;
+
+        this.update();
     }
 }
